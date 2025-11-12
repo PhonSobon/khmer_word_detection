@@ -1,7 +1,7 @@
 import os
 
 # === CONFIG ===
-TEXT_FILE = "data_clean/combine_clean.txt"
+TEXT_FILE = "combine_clean.txt"
 FONT_DIR = "fonts"  # Folder containing all .ttf fonts
 OUTPUT_IMAGE_DIR = "images"
 OUTPUT_YOLO_DIR = "labels"
