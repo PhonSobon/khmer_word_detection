@@ -1,7 +1,7 @@
 import os
 import cv2
 import random
-from process.config import TEXT_FILE, OUTPUT_IMAGE_DIR, IMAGES_PER_FONT, FONT_SIZE_MIN, FONT_SIZE_MAX
+from process.config import TEXT_FILE, OUTPUT_IMAGE_DIR, IMAGES_PER_FONT, FONT_SIZE_MIN, FONT_SIZE_MAX, MIN_WORDS_PER_IMAGE, MAX_WORDS_PER_IMAGE
 from process.random_fonts import FontManager
 from process.image_processing import ImageGenerator
 from process.yolo_format import YoloFormatter
@@ -65,12 +65,17 @@ def main():
             # Get remaining words to process
             remaining_words = all_words[word_index:]
             
+
+            words_to_use = random.randint(MIN_WORDS_PER_IMAGE, MAX_WORDS_PER_IMAGE)
+            limited_words = remaining_words[:words_to_use]
+
             # Random font size for each image
             font_size = random.randint(FONT_SIZE_MIN, FONT_SIZE_MAX)
+
             
             # Generate image
             img_cv, word_boxes, words_used = image_generator.generate_image(
-                remaining_words, 
+                limited_words, 
                 font_path,
                 font_size
             )
