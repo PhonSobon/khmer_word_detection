@@ -4,13 +4,13 @@ from process.config import IMAGE_WIDTH, IMAGE_HEIGHT, OUTPUT_XML_DIR
 
 class XmlFormatter:
     @staticmethod
-    def generate_xml_label(word_boxes, image_name, image_count):
+    def generate_xml_label(word_boxes, image_name, filename):
         """
         Generate XML format label file
         Args:
             word_boxes: List of word box dictionaries
             image_name: Name of the image file
-            image_count: Current image number
+            filename: Base filename (without extension)
         """
         # Create root element
         root = ET.Element("metadata")
@@ -55,7 +55,7 @@ class XmlFormatter:
         # Write XML file
         tree = ET.ElementTree(root)
         ET.indent(tree, space="", level=0)  # Python 3.9+
-        xml_path = os.path.join(OUTPUT_XML_DIR, f"kh_data_{image_count}.xml")
+        xml_path = os.path.join(OUTPUT_XML_DIR, f"{filename}.xml")
         tree.write(xml_path, encoding="utf-8", xml_declaration=True)
         
         return xml_path

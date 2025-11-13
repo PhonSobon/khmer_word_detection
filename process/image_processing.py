@@ -2,24 +2,29 @@ import random
 import numpy as np
 import cv2
 from PIL import Image, ImageDraw, ImageFont
-from process.config import *
+from process.config import (
+    IMAGE_WIDTH, IMAGE_HEIGHT, 
+    LEFT_MARGIN_MIN, LEFT_MARGIN_MAX,
+    RIGHT_MARGIN_MIN, RIGHT_MARGIN_MAX,
+    TOP_MARGIN, BOTTOM_MARGIN,
+    LINE_SPACING
+)
 
 class ImageGenerator:
     def __init__(self, font_manager):
         self.font_manager = font_manager
     
-    def generate_image(self, words, image_count):
+    def generate_image(self, words, font_path, font_size):
         """
         Generate a single image with words and return image data + word boxes
         Args:
             words: List of words to render
-            image_count: Current image number
+            font_path: Path to the font file to use
+            font_size: Size of the font
         Returns:
-            tuple: (img_cv, word_boxes, words_used, font_info)
+            tuple: (img_cv, word_boxes, words_used)
         """
         # Random parameters for this image
-        font_path = self.font_manager.get_font_by_image_number(image_count)
-        font_size = random.randint(FONT_SIZE_MIN, FONT_SIZE_MAX)
         left_margin = random.randint(LEFT_MARGIN_MIN, LEFT_MARGIN_MAX)
         right_margin = random.randint(RIGHT_MARGIN_MIN, RIGHT_MARGIN_MAX)
         
@@ -84,15 +89,10 @@ class ImageGenerator:
             })
             
             current_line_words.append(word)
-            x += word_width
+            x += word_width  # No word padding
             word_index += 1
         
         # Convert PIL to OpenCV format
         img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         
-        font_info = {
-            'path': font_path,
-            'size': font_size
-        }
-        
-        return img_cv, word_boxes, word_index, font_info
+        return img_cv, word_boxes, word_index

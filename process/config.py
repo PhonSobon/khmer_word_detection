@@ -3,9 +3,9 @@ import os
 # === CONFIG ===
 TEXT_FILE = "combine_clean.txt"
 FONT_DIR = "fonts"  # Folder containing all .ttf fonts
-OUTPUT_IMAGE_DIR = "images"
-OUTPUT_YOLO_DIR = "labels"
-OUTPUT_XML_DIR = "xml_labels"
+OUTPUT_IMAGE_DIR = "synthetic_images/"
+OUTPUT_YOLO_DIR = "synthetic_labels/"
+OUTPUT_XML_DIR = "synthetic_xml_labels/"
 
 # === A4 PARAMETERS (at 96 DPI) ===
 # A4 size: 210mm x 297mm
@@ -24,8 +24,11 @@ BOTTOM_MARGIN = int(1.5 * DPI / 2.54)     # ~57 pixels
 # Font and spacing
 FONT_SIZE_MIN = 9
 FONT_SIZE_MAX = 30
-LINE_SPACING = 8
-WORD_SPACING = 5  # Single space between words
+LINE_SPACING = 8  # 8 pixels between lines
+PARAGRAPH_SPACING = int(6 * DPI / 72)  # 6pt converted to pixels (~8 pixels at 96 DPI)
+
+# Images per font configuration
+IMAGES_PER_FONT = 2000  # Number of images to generate per font
 
 # === CREATE OUTPUT FOLDERS ===
 os.makedirs(OUTPUT_IMAGE_DIR, exist_ok=True)

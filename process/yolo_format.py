@@ -3,12 +3,12 @@ from process.config import IMAGE_WIDTH, IMAGE_HEIGHT, OUTPUT_YOLO_DIR
 
 class YoloFormatter:
     @staticmethod
-    def generate_yolo_label(word_boxes, image_count):
+    def generate_yolo_label(word_boxes, filename):
         """
         Generate YOLO format label file
         Args:
             word_boxes: List of word box dictionaries
-            image_count: Current image number
+            filename: Base filename (without extension)
         """
         yolo_lines = []
         
@@ -25,7 +25,7 @@ class YoloFormatter:
             yolo_lines.append(f"0 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}")
         
         # Write YOLO label file
-        yolo_path = os.path.join(OUTPUT_YOLO_DIR, f"kh_data_{image_count}.txt")
+        yolo_path = os.path.join(OUTPUT_YOLO_DIR, f"{filename}.txt")
         with open(yolo_path, "w", encoding="utf-8") as f:
             f.write("\n".join(yolo_lines))
         
