@@ -1,25 +1,32 @@
+import re
 from khmernltk import word_tokenize
 
-# Input and output file paths
-input_file = "data/427022_orig.txt"
-output_file = "data_clean/khmer_cleaned.txt"
+input_file = "combine_clean.txt"
+output_file = "combine_cleaned.txt"
 
 # Step 1: Read text
 with open(input_file, "r", encoding="utf-8") as f:
     text = f.read()
 
-# Step 2: Tokenize text
+# Step 2: Tokenize
 tokens = word_tokenize(text)
 
-# Step 3: Clean tokens
-# Remove empty strings and extra spaces
-clean_tokens = [t.strip() for t in tokens if t.strip() != ""]
+clean_tokens = []
+for t in tokens:
 
-# Step 4: Join tokens line by line
-cleaned_text = "\n".join(clean_tokens)
+    # Strip leading/trailing spaces
+    t = t.strip()
+    t = re.sub(r"\.+", "", t)
+    t = t.replace("…", "")  # remove unicode ellipsis
 
-# Step 5: Save result to a file
+    # Remove if empty after cleaning
+    if t == "":
+        continue
+
+    clean_tokens.append(t)
+
+# Step 3: Save clean output
 with open(output_file, "w", encoding="utf-8") as f:
-    f.write(cleaned_text)
+    f.write("\n".join(clean_tokens))
 
 print("Cleaned text saved to", output_file)

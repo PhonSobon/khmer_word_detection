@@ -1,4 +1,5 @@
 import os
+import re
 from khmernltk import word_tokenize
 
 # Input and output directories
@@ -27,7 +28,14 @@ for filename in os.listdir(input_dir):
         tokens = word_tokenize(text)
 
         # Step 3: Clean tokens
-        clean_tokens = [t.strip() for t in tokens if t.strip() != ""]
+        clean_tokens = []
+        for t in tokens:
+            t = t.strip()                     # Remove spaces
+            t = re.sub(r"\.+", "", t)         # Remove ., .., ..., etc.
+            t = t.replace("…", "")            # Remove unicode ellipsis
+
+            if t != "":
+                clean_tokens.append(t)
 
         # Step 4: Join tokens line by line
         cleaned_text = "\n".join(clean_tokens)
