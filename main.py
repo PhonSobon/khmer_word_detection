@@ -1,7 +1,7 @@
 import os
 import cv2
 import random
-from process.config import TEXT_FILE, OUTPUT_IMAGE_DIR, IMAGES_PER_FONT, FONT_SIZE_MIN, FONT_SIZE_MAX, MIN_WORDS_PER_IMAGE, MAX_WORDS_PER_IMAGE
+from process.config import FONT_SIZE_MIN_PT, TEXT_FILE, OUTPUT_IMAGE_DIR, IMAGES_PER_FONT,FONT_SIZE_MAX_PT, FONT_SIZE_MIN, FONT_SIZE_MAX, MIN_WORDS_PER_IMAGE, MAX_WORDS_PER_IMAGE
 from process.random_fonts import FontManager
 from process.image_processing import ImageGenerator
 from process.yolo_format import YoloFormatter
