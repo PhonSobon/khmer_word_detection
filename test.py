@@ -186,7 +186,7 @@ while word_index < len(all_words):
     xml_path = os.path.join(OUTPUT_XML_DIR, f"kh_data_{image_count}.xml")
     tree.write(xml_path, encoding="utf-8", xml_declaration=True)
     
-    print(f"✅ Generated {image_name} ({len(word_boxes)} words) using {os.path.basename(font_path)} size {font_size}")
+    print(f"Generated {image_name} ({len(word_boxes)} words) using {os.path.basename(font_path)} size {font_size}")
 
 print(f"\n🎉 Generated {image_count} images with YOLO and XML annotations!")
-print(f"📊 Total words processed: {word_index}/{len(all_words)}")
+print(f"Total words processed: {word_index}/{len(all_words)}")

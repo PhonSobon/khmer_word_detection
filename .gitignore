@@ -4,3 +4,7 @@ xml_labels/
 data_clean/
 kh_data_100/
 dataset/
+models/
+images_test/
+images_validation/
+test_results/

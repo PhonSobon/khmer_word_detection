@@ -1,22 +1,24 @@
 import os
 import xml.etree.ElementTree as ET
-from process.config import IMAGE_WIDTH, IMAGE_HEIGHT, OUTPUT_XML_DIR
+from process.config import OUTPUT_XML_DIR
 
 class XmlFormatter:
     @staticmethod
-    def generate_xml_label(word_boxes, image_name, filename):
+    def generate_xml_label(word_boxes, image_name, filename, image_width, image_height):
         """
         Generate XML format label file
         Args:
             word_boxes: List of word box dictionaries
             image_name: Name of the image file
             filename: Base filename (without extension)
+            image_width: Width of the image
+            image_height: Height of the image
         """
         # Create root element
         root = ET.Element("metadata")
         ET.SubElement(root, "image").text = image_name
-        ET.SubElement(root, "width").text = str(IMAGE_WIDTH)
-        ET.SubElement(root, "height").text = str(IMAGE_HEIGHT)
+        ET.SubElement(root, "width").text = str(image_width)
+        ET.SubElement(root, "height").text = str(image_height)
         
         # Group words by paragraph and line
         paragraphs = {}

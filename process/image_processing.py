@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 from PIL import Image, ImageDraw, ImageFont
 from process.config import (
-    IMAGE_WIDTH, IMAGE_HEIGHT, 
+    PAGE_SIZES,
     LEFT_MARGIN_MIN, LEFT_MARGIN_MAX,
     RIGHT_MARGIN_MIN, RIGHT_MARGIN_MAX,
     TOP_MARGIN, BOTTOM_MARGIN,
@@ -22,18 +22,21 @@ class ImageGenerator:
             font_path: Path to the font file to use
             font_size: Size of the font
         Returns:
-            tuple: (img_cv, word_boxes, words_used)
+            tuple: (img_cv, word_boxes, words_used, image_width, image_height)
         """
+        # Randomly select page size
+        image_width, image_height = random.choice(PAGE_SIZES)
+        
         # Random parameters for this image
         left_margin = random.randint(LEFT_MARGIN_MIN, LEFT_MARGIN_MAX)
         right_margin = random.randint(RIGHT_MARGIN_MIN, RIGHT_MARGIN_MAX)
         
         font = ImageFont.truetype(font_path, font_size)
-        img = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT), (255, 255, 255))
+        img = Image.new("RGB", (image_width, image_height), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         
         # Calculate usable width
-        usable_width = IMAGE_WIDTH - left_margin - right_margin
+        usable_width = image_width - left_margin - right_margin
         
         x, y = left_margin, TOP_MARGIN
         word_boxes = []
@@ -63,7 +66,7 @@ class ImageGenerator:
                 x = left_margin
                 
                 # Check if we've reached bottom margin
-                if y + word_height > IMAGE_HEIGHT - BOTTOM_MARGIN:
+                if y + word_height > image_height - BOTTOM_MARGIN:
                     page_full = True
                     break
                 
@@ -95,4 +98,4 @@ class ImageGenerator:
         # Convert PIL to OpenCV format
         img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         
-        return img_cv, word_boxes, word_index
+        return img_cv, word_boxes, word_index, image_width, image_height
